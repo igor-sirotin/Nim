@@ -532,6 +532,7 @@ proc liMessage*(conf: ConfigRef; info: TLineInfo, msg: TMsgKind, arg: string,
       title = ErrorTitle
     else:
       title = WarningTitle
+    echo "<<<<< WARNING " & $msg & ", ignoreMsg = " & $ignoreMsg & ", title = " & $title & ", optWarns = " & $optWarns & ", options = " & $conf.options & ", note = " & $msg & ", notes = " & $conf.notes
     if not ignoreMsg: writeContext(conf, info)
     color = WarningColor
     inc(conf.warnCounter)
