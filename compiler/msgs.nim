@@ -418,7 +418,8 @@ proc handleError(conf: ConfigRef; msg: TMsgKind, eh: TErrorHandling, s: string, 
   if msg in fatalMsgs:
     if conf.cmd == cmdIdeTools: log(s)
     quit(conf, msg)
-  echo "<<< handleError, msg = " & $msg & ", conf.warningAsErrors = " & $conf.warningAsErrors & ", ignoreMsg = " & $ignoreMsg & ", s = " & s
+  if msg == warnUnusedImportX:
+    echo "<<< handleError, msg = " & $msg & ", conf.warningAsErrors = " & $conf.warningAsErrors & ", ignoreMsg = " & $ignoreMsg & ", s = " & s
   if msg >= errMin and msg <= errMax or
       (msg in warnMin..hintMax and msg in conf.warningAsErrors and not ignoreMsg):
     inc(conf.errorCounter)
@@ -534,7 +535,8 @@ proc liMessage*(conf: ConfigRef; info: TLineInfo, msg: TMsgKind, arg: string,
     else:
       title = WarningTitle
       color = WarningColor
-    echo "<<<<< WARNING " & $msg & ", ignoreMsg = " & $ignoreMsg & ", title = " & $title & ", optWarns = " & $optWarns & ", options = " & $conf.options & ", note = " & $msg & ", notes = " & $conf.notes
+    if msg == warnUnusedImportX:
+      echo "<<<<< WARNING " & $msg & ", ignoreMsg = " & $ignoreMsg & ", title = " & $title & ", optWarns = " & $optWarns & ", options = " & $conf.options & ", note = " & $msg & ", notes = " & $conf.notes
     if not ignoreMsg: writeContext(conf, info)
     inc(conf.warnCounter)
   of hintMin..hintMax:
