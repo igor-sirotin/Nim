@@ -832,6 +832,9 @@ proc processSwitch*(switch, arg: string, pass: TCmdLinePass, info: TLineInfo;
       localError(conf, info, "invalid verbosity level: '$1'" % arg)
     conf.verbosity = verbosity
     var verb = NotesVerbosity[conf.verbosity]
+    echo "<<< VERBOSITY. verb = " & $verb & ", conf.notes = " & $conf.notes & ", conf.modifiedyNotes = " & $conf.modifiedyNotes
+    echo "<<< VERBOSITY computedVerbosityNotes" & $NotesVerbosity
+    echo "<<< range: low = " & $low(TNoteKind) & ", high = " & $high(TNoteKind)
     ## We override the default `verb` by explicitly modified (set/unset) notes.
     conf.notes = (conf.modifiedyNotes * conf.notes + verb) -
       (conf.modifiedyNotes * verb - conf.notes)
