@@ -418,6 +418,7 @@ proc handleError(conf: ConfigRef; msg: TMsgKind, eh: TErrorHandling, s: string, 
   if msg in fatalMsgs:
     if conf.cmd == cmdIdeTools: log(s)
     quit(conf, msg)
+  echo "<<< handleError, msg = " & $msg & ", conf.warningAsErrors = " & $conf.warningAsErrors & ", ignoreMsg = " & $ignoreMsg
   if msg >= errMin and msg <= errMax or
       (msg in warnMin..hintMax and msg in conf.warningAsErrors and not ignoreMsg):
     inc(conf.errorCounter)
