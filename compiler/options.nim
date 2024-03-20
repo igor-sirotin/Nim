@@ -438,6 +438,7 @@ template setErrorMaxHighMaybe*(conf: ConfigRef) =
   assignIfDefault(conf.errorMax, high(int))
 
 proc setNoteDefaults*(conf: ConfigRef, note: TNoteKind, enabled = true) =
+  echo "<<< setNoteDefaults: note = " & $note & ", enabled = " & $enabled
   template fun(op) =
     conf.notes.op note
     conf.mainPackageNotes.op note
@@ -445,6 +446,7 @@ proc setNoteDefaults*(conf: ConfigRef, note: TNoteKind, enabled = true) =
   if enabled: fun(incl) else: fun(excl)
 
 proc setNote*(conf: ConfigRef, note: TNoteKind, enabled = true) =
+  echo "<<< setNote: note = " & $note & ", enabled = " & $enabled
   # see also `prepareConfigNotes` which sets notes
   if note notin conf.cmdlineNotes:
     if enabled: incl(conf.notes, note) else: excl(conf.notes, note)
